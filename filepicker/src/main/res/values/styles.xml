@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName">
+
+    <style name="FilePicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/fp_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/fp_colorPrimaryDark</item>
+        <item name="colorAccent">@color/fp_colorAccent</item>
+        <item name="fp_toolbar_theme">@style/fp_BaseToolbarTheme</item>
+    </style>
+
+    <style name="fp_BaseToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+    </style>
+</resources>

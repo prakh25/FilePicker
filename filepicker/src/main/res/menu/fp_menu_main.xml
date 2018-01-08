@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fp_action_close"
+        android:title="@string/fp_action_close"
+        app:showAsAction="always"
+        android:icon="@drawable/fp_ic_close_24dp" />
+</menu>

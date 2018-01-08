@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="ResourceName">FilePicker</string>
+    <string name="fp_empty_directory">Empty Directory</string>
+
+    <string name="fp_footer_select">select (%d)</string>
+    <string name="fp_action_close">close</string>
+
+    <string name="fp_type_archive">Archive</string>
+    <string name="fp_type_certificate">Certificate</string>
+    <string name="fp_type_directory">Directory</string>
+    <string name="fp_type_document">File</string>
+    <string name="fp_type_drawing">Picture</string>
+    <string name="fp_type_excel">Spreadsheet</string>
+    <string name="fp_type_image">Image</string>
+    <string name="fp_type_music">Music</string>
+    <string name="fp_type_video">Video</string>
+    <string name="fp_type_pdf">PDF document</string>
+    <string name="fp_type_power_point">Presentation</string>
+    <string name="fp_type_word">Document</string>
+    <string name="fp_type_apk">APK</string>
+
+
+    <string name="fp_file_last_modified">Last Modified: %s, %s</string>
+</resources>

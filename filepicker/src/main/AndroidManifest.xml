@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.filepicker" >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application>
+
+        <activity android:name=".FilePickerActivity"
+            android:theme="@style/FilePicker"
+            android:exported="false">
+        </activity>
+    </application>
+
+</manifest>
