@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RestrictTo;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * Created by prakh on 07-01-2018.
  */
-
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class FilePickerActivity extends HelperBaseActivity
         implements FilePickerFragment.FileClickListener {
 

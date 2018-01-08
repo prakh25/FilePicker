@@ -61,6 +61,8 @@ public class FilePickerFragment extends Fragment {
                 container, false);
 
         recyclerView = view.findViewById(R.id.fp_recycler_view);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
+
         emptyView = view.findViewById(R.id.fp_empty_text_view);
 
         emptyView.setCompoundDrawablesWithIntrinsicBounds(null,
