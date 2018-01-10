@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <color name="fp_colorPrimary">#546e7a</color>
-    <color name="fp_colorPrimaryDark">#29434e</color>
+    <color name="fp_colorPrimary">#607d8b</color>
+    <color name="fp_colorPrimaryDark">#455a64</color>
     <color name="fp_colorAccent">#40c4ff</color>
+
+    <color name="fp_selected_item_bg">#e1f5fe</color>
 
 
 </resources>

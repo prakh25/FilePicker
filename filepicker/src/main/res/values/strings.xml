@@ -2,7 +2,7 @@
     <string name="app_name" tools:ignore="ResourceName">FilePicker</string>
     <string name="fp_empty_directory">Empty Directory</string>
 
-    <string name="fp_footer_select">select (%d)</string>
+    <string name="fp_footer_select">Selected (%d)</string>
     <string name="fp_action_close">close</string>
 
     <string name="fp_type_archive">Archive</string>
@@ -21,4 +21,5 @@
 
 
     <string name="fp_file_last_modified">Last Modified: %s, %s</string>
+    <string name="fp_action_select">Select</string>
 </resources>

@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/fp_colorPrimaryDark</item>
         <item name="colorAccent">@color/fp_colorAccent</item>
         <item name="fp_toolbar_theme">@style/fp_BaseToolbarTheme</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="fp_BaseToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">

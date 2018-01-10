@@ -1,6 +1,9 @@
 package com.example.filepicker;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,14 @@ import java.util.List;
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder> {
 
     private List<File> fileList;
-    private FileInteractionListener listener;
+    private SparseBooleanArray selectedItems;
+
+    private AdapterInteractionListener listener;
 
     public FileAdapter(List<File> files) {
         fileList = new ArrayList<>();
         fileList.addAll(files);
+        selectedItems = new SparseBooleanArray();
     }
 
     @Override
@@ -46,6 +52,16 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
                 .getString(R.string.fp_file_last_modified,
                         FileUtils.getDate(file.lastModified()),
                         FileUtils.getTime(file.lastModified())));
+
+        if(selectedItems.get(position)) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(),
+                    R.color.fp_selected_item_bg));
+        } else {
+            TypedValue outValue = new TypedValue();
+            holder.itemView.getContext().getTheme()
+                    .resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            holder.itemView.setBackgroundResource(outValue.resourceId);
+        }
     }
 
     @Override
@@ -53,11 +69,41 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
         return fileList.size();
     }
 
-    public File getModel(int index) {
+    private File getModel(int index) {
         return fileList.get(index);
     }
 
-    public void setListener(FileInteractionListener listener) {
+    public void toggleSelection(int pos) {
+        if(selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        } else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelection() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public String getSelectedFilePath(int pos) {
+        return fileList.get(pos).getPath();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<>(selectedItems.size());
+        for(int i=0; i<selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
+    public void setListener(AdapterInteractionListener listener) {
         this.listener = listener;
     }
 
@@ -67,7 +113,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
         private TextView fileTitle;
         private TextView fileSubtitle;
 
-        public FileViewHolder(View itemView, final FileInteractionListener listener) {
+        public FileViewHolder(final View itemView, final AdapterInteractionListener listener) {
             super(itemView);
 
             fileImage = itemView.findViewById(R.id.fp_item_image);
@@ -77,13 +123,25 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClicked(view, getAdapterPosition());
+                    listener.onItemClicked(getModel(getAdapterPosition()),
+                            getAdapterPosition());
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onItemLongClicked(getModel(getAdapterPosition()),
+                            getAdapterPosition());
+                    return true;
                 }
             });
         }
     }
 
-    public interface FileInteractionListener {
-        void onItemClicked(View view, int position);
+    public interface AdapterInteractionListener {
+        void onItemClicked(File file, int position);
+
+        void onItemLongClicked(File file, int position);
     }
 }

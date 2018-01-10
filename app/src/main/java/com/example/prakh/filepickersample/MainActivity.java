@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         FilePickerResponse response = FilePickerResponse.fromResulIntent(data);
 
         if (resultCode == RESULT_OK) {
-            String path = response.getFilePath();
+            String path = response.getFilePath().get(0);
 
             Log.d("Path: ", path);
             Toast.makeText(this, "Picked file: " + path, Toast.LENGTH_LONG).show();

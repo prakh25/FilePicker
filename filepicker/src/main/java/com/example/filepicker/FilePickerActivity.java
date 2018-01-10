@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +17,6 @@ import com.example.filepicker.filters.HiddenFilter;
 import com.example.filepicker.filters.PatternFilter;
 import com.example.filepicker.util.FileUtils;
 
-import java.io.File;
 import java.io.FileFilter;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -31,7 +29,7 @@ import java.util.regex.Pattern;
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class FilePickerActivity extends HelperBaseActivity
-        implements FilePickerFragment.FileClickListener {
+        implements FilePickerFragment.FragmentListener {
 
     public static final String SAVE_STATE_START_PATH = "state_start_path";
     private static final String SAVE_STATE_CURRENT_PATH = "state_current_path";
@@ -175,7 +173,7 @@ public class FilePickerActivity extends HelperBaseActivity
                 .commit();
     }
 
-    private void updateTitle() {
+    public void updateTitle() {
         if (getSupportActionBar() != null) {
             String titlePath = currentPath.isEmpty() ? "/" : currentPath;
             if (TextUtils.isEmpty(title)) {
@@ -195,9 +193,9 @@ public class FilePickerActivity extends HelperBaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if(item.getItemId() == R.id.fp_action_close){
+        } else if (item.getItemId() == R.id.fp_action_close) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -224,29 +222,14 @@ public class FilePickerActivity extends HelperBaseActivity
     }
 
     @Override
-    public void onFileClicked(final File clickedFile) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                handleFileClicked(clickedFile);
-            }
-        }, 150);
+    public void directoryClicked(String path) {
+        currentPath = path;
+        addFragmentToBackStack(path);
+        updateTitle();
     }
 
-    private void handleFileClicked(final File clickedFile) {
-        if (clickedFile.isDirectory()) {
-            currentPath = clickedFile.getPath();
-            // If the user wanna go to the emulated directory, he will be taken to the
-            // corresponding user emulated folder.
-            if (currentPath.equals("/storage/emulated"))
-                currentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            addFragmentToBackStack(currentPath);
-            updateTitle();
-        } else {
-            FilePickerResponse response =
-                    new FilePickerResponse.Builder(clickedFile.getPath())
-                    .build();
-            setResultAndFinish(response);
-        }
+    @Override
+    public void fileClicked(FilePickerResponse response) {
+        setResultAndFinish(response);
     }
 }

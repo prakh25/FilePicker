@@ -6,19 +6,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.RestrictTo;
 
+import java.util.List;
+
 /**
  * Created by prakh on 07-01-2018.
  */
 
 public class FilePickerResponse implements Parcelable {
-    private final String filePath;
+    private final List<String> filePath;
     private final int errorCode;
 
     private FilePickerResponse(int errorCode) {
         this(null, errorCode);
     }
 
-    private FilePickerResponse(String filePath, int errorCode) {
+    private FilePickerResponse(List<String> filePath, int errorCode) {
         this.filePath = filePath;
         this.errorCode = errorCode;
     }
@@ -41,7 +43,7 @@ public class FilePickerResponse implements Parcelable {
         return new Intent().putExtra(Constants.EXTRA_FILE_PICKER_RESPONSE, this);
     }
 
-    public String getFilePath() {
+    public List<String> getFilePath() {
         return filePath;
     }
 
@@ -56,16 +58,16 @@ public class FilePickerResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.filePath);
+        dest.writeStringList(this.filePath);
         dest.writeInt(this.errorCode);
     }
 
     protected FilePickerResponse(Parcel in) {
-        this.filePath = in.readString();
+        this.filePath = in.createStringArrayList();
         this.errorCode = in.readInt();
     }
 
-    public static final Parcelable.Creator<FilePickerResponse> CREATOR = new Parcelable.Creator<FilePickerResponse>() {
+    public static final Creator<FilePickerResponse> CREATOR = new Creator<FilePickerResponse>() {
         @Override
         public FilePickerResponse createFromParcel(Parcel source) {
             return new FilePickerResponse(source);
@@ -79,9 +81,9 @@ public class FilePickerResponse implements Parcelable {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     public static class Builder {
-        private String filePath;
+        private List<String> filePath;
 
-        public Builder(String filePath) {
+        public Builder(List<String> filePath) {
             this.filePath = filePath;
         }
 
